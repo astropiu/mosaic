@@ -4,6 +4,7 @@
 #include <opencv2/dnn/dnn.hpp>
 #include <iostream>
 #include <string>
+#include <fstream>
 #include "isface.h"
 using namespace cv;
 using namespace std;
@@ -17,6 +18,7 @@ int main(){
     VideoCapture vc;
     Mat frame;
     bool suc,success;
+    std::string faceindex;
     std::string modelConfiguration = "data/deploy.prototxt";
     std::string modelweights = "data/res10_300x300_ssd_iter_140000.caffemodel";
     Net net = cv::dnn::readNetFromCaffe(modelConfiguration, modelweights);
@@ -41,8 +43,9 @@ int main(){
             vc.set(CAP_PROP_POS_FRAMES,i);
             suc=vc.read(frame); 
             success= false; 
-            if(isface(frame,net,success)&& success)
+            if(isface(frame,net,success)&& success){
                  imwrite("faces/loe"+to_string( ++imgs_count)+".jpg",frame);
+                 faceindex+='\t'+to_string(imgs_count);}
             else {
                 resize(frame,frame,Size(184,104));
                 imwrite("nonfaces/loe"+to_string( ++imgs_count)+".jpg",frame);
@@ -56,5 +59,8 @@ int main(){
        auto duration = duration_cast<microseconds>(stop-start);
        cout<< '\n'<<duration.count()<<"ms";
       #endif
+      ofstream myf ("face_indices.txt");
+      myf<<faceindex;
+      myf.close();
     
 }

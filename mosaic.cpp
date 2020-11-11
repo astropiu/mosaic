@@ -3,6 +3,7 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <iostream>
 #include <string>
+#include <fstream>
 using namespace cv;
 using namespace std;
 
@@ -14,6 +15,14 @@ int main(){
     #ifdef hsv
     cvtColor(src,src,COLOR_BGR2HSV);
     #endif
+    array<short,img_count> fi = {0};
+    ifstream myf("face_indices.txt");
+    int c,count=0;
+    while(myf>>c){
+        fi[c-1]=1;
+        count++;
+    }
+    
     int src_hx=size(src).width;
     int src_hy= size(src).height;
     int sc=4;
@@ -48,6 +57,9 @@ int main(){
                 absdiff(frame,imgs[k],diff);
                 su=sum(diff);
                 score = su[0]+su[1]+su[2];
+                //checking if its face 
+                if(fi[k]==1)
+                    score*=.4;
                 if(score<mindiff){
                     mindiff=score;
                     min_index[i][j]=k;
@@ -60,6 +72,6 @@ int main(){
     #ifdef hsv
     cvtColor(dest,dest,COLOR_HSV2BGR);
     #endif
-    imwrite("final.png",dest);
+    imwrite("final.jpg",dest);
     //*/
 }

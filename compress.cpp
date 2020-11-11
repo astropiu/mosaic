@@ -5,11 +5,11 @@
 #include<vector>
 using namespace cv;
 int main(){
-    Mat img= imread("final.png");
+    Mat img= imread("final.jpg");
     std::vector<int>params;
     params.push_back(IMWRITE_JPEG_QUALITY);
-    params.push_back(10);
-    cv::imwrite("compressed.jpeg",img,params);
+    params.push_back(50);
+    cv::imwrite("compressed.jpg",img,params);
 
 
 }
