@@ -7,7 +7,9 @@ Generated a photo mosaic of _Sir David Attenborough's_ potrait by sampling frame
 * Replacing each pixel of the reference potrait with the frame that has the closest average intensity to that of the pixel.
 * Applied weightage to the facial images so that they appear more in the result
 
-![Downsampled] (https://github.com/astropiu/mosaic/blob/master/final_downsampled.jpg?raw=true)
+As the sampling is random, I had to use large number of frames per row/column for good appearance
+
+![](final_downsampled.jpg)
 
 
 This is the downsampled version of the result, for the original result with full resolution, download other two final versions
